@@ -1,0 +1,19 @@
+﻿@using MovieRentalSystem.Models;
+@model IList<Movie>
+
+<table style="width:100%">
+    @foreach (var item in Model)
+    {
+    <tr>
+        <th>@item.Name</th>
+        @if (item.IsRented == 0 || item.IsRented == null)
+        {
+            <th>Liber</th>
+        }
+        else if (item.IsRented == 1)
+        {
+            <th>Inchiriat</th>
+        }
+    </tr>
+    }
+</table>
