@@ -2,15 +2,15 @@
 @model IList<Movie>
 
 <table style="width:100%">
-    @foreach (var item in Model)
+    @foreach (var filmulCurrent in Model)
     {
-    <tr>
-        <th>@item.Name</th>
-        @if (item.IsRented == 0 || item.IsRented == null)
+    <tr id="@filmulCurrent.Id">
+        <th>@filmulCurrent.Name</th>
+        @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
         {
             <th>Liber</th>
         }
-        else if (item.IsRented == 1)
+        else if (filmulCurrent.IsRented == 1)
         {
             <th>Inchiriat</th>
         }
