@@ -1,19 +1,28 @@
 ﻿@using MovieRentalSystem.Models;
 @model IList<Movie>
 
-<table style="width:100%; margin-top: 30px;">
-    @foreach (var filmulCurrent in Model)
-    {
-    <tr id="@filmulCurrent.Id">
-        <th>@filmulCurrent.Name</th>
-        @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
-        {
-            <th>Liber</th>
-        }
-        else if (filmulCurrent.IsRented == 1)
-        {
-            <th>Inchiriat</th>
-        }
-    </tr>
-    }
-</table>
+<div class="movie-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Movie name</th>
+                <th>State</th>
+        </thead>
+        <tbody>
+            @foreach (var filmulCurrent in Model)
+            {
+                <tr id="@filmulCurrent.Id">
+                    <th>@filmulCurrent.Name</th>
+                    @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
+                    {
+                        <th>Liber</th>
+                    }
+                    else if (filmulCurrent.IsRented == 1)
+                    {
+                        <th>Inchiriat</th>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

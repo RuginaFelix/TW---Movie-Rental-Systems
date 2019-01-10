@@ -7,9 +7,9 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="html-layout">
     <header class="navigation-header">
-        <h1 class="logo">Logo</h1>
+        <h1 class="logo" style="color:#E1F5FA">Uganda Movies</h1>
         <input type="checkbox" id="navigation-toggle" class="navigation-toggle" />
         <nav class="navigation-bar">
             <ul>
@@ -26,9 +26,7 @@
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 
