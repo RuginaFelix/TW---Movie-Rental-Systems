@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MovieRentalSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MovieRentalSystemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Movies" EntityType="MovieRentalSystemModel.Movie" />
+    <EntitySet Name="Users" EntityType="MovieRentalSystemModel.User" />
+    <AssociationSet Name="FK_Movie_User" Association="MovieRentalSystemModel.FK_Movie_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Movie" EntitySet="Movies" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="Movie">
     <Key>
       <PropertyRef Name="Id" />
@@ -7,8 +15,34 @@
     <Property Name="Id" Type="Guid" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="IsRented" Type="Int32" />
+    <Property Name="RenterId" Type="Guid" />
+    <Property Name="An" Type="Int32" />
+    <Property Name="Tip" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="MovieRentalSystemModel.FK_Movie_User" FromRole="Movie" ToRole="User" />
   </EntityType>
-  <EntityContainer Name="MovieRentalSystemEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Movies" EntityType="Self.Movie" />
-  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Parola" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Adresa" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Nume" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Prenume" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="AnDeNastere" Type="Int32" />
+    <NavigationProperty Name="Movies" Relationship="MovieRentalSystemModel.FK_Movie_User" FromRole="User" ToRole="Movie" />
+  </EntityType>
+  <Association Name="FK_Movie_User">
+    <End Type="MovieRentalSystemModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="MovieRentalSystemModel.Movie" Role="Movie" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Movie">
+        <PropertyRef Name="RenterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

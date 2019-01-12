@@ -7,8 +7,40 @@
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="250" />
     <Property Name="IsRented" Type="int" />
+    <Property Name="RenterId" Type="uniqueidentifier" />
+    <Property Name="An" Type="int" />
+    <Property Name="Tip" Type="nvarchar" MaxLength="250" />
   </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Parola" Type="nvarchar" MaxLength="250" />
+    <Property Name="Email" Type="nvarchar" MaxLength="250" />
+    <Property Name="Adresa" Type="nvarchar" MaxLength="250" />
+    <Property Name="Nume" Type="nvarchar" MaxLength="250" />
+    <Property Name="Prenume" Type="nvarchar" MaxLength="250" />
+    <Property Name="AnDeNastere" Type="int" />
+  </EntityType>
+  <Association Name="FK_Movie_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Movie" Type="Self.Movie" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Movie">
+        <PropertyRef Name="RenterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="MovieRentalSystemModelStoreContainer">
     <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Movie_User" Association="Self.FK_Movie_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Movie" EntitySet="Movie" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

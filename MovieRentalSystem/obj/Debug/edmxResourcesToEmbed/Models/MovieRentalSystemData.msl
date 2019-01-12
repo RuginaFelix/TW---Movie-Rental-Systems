@@ -4,9 +4,25 @@
     <EntitySetMapping Name="Movies">
       <EntityTypeMapping TypeName="MovieRentalSystemModel.Movie">
         <MappingFragment StoreEntitySet="Movie">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Tip" ColumnName="Tip" />
+          <ScalarProperty Name="An" ColumnName="An" />
+          <ScalarProperty Name="RenterId" ColumnName="RenterId" />
           <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="MovieRentalSystemModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="AnDeNastere" ColumnName="AnDeNastere" />
+          <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+          <ScalarProperty Name="Nume" ColumnName="Nume" />
+          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Parola" ColumnName="Parola" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

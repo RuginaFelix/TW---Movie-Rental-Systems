@@ -5,7 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1276a81d566c43ff8bebded9cc104111" Name="Diagram1">
-        <EntityTypeShape EntityType="MovieRentalSystemModel.Movie" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieRentalSystemModel.Movie" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="MovieRentalSystemModel.User" Width="1.5" PointX="0.75" PointY="1" />
+        <AssociationConnector Association="MovieRentalSystemModel.FK_Movie_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
