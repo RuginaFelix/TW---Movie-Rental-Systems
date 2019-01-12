@@ -1,28 +1,84 @@
 ﻿@using MovieRentalSystem.Models;
 @model IList<Movie>
 
-<div class="movie-table">
-    <table>
-        <thead>
-            <tr>
-                <th>Movie name</th>
-                <th>State</th>
-        </thead>
-        <tbody>
-            @foreach (var filmulCurrent in Model)
-            {
-                <tr id="@filmulCurrent.Id">
-                    <th>@filmulCurrent.Name</th>
-                    @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
-                    {
-                        <th>Liber</th>
-                    }
-                    else if (filmulCurrent.IsRented == 1)
-                    {
-                        <th>Inchiriat</th>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="limiter">
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <div class="table100 ver1 m-b-110">
+                <div class="table100-head">
+                    <table>
+                        <thead class="table-head">
+                            <tr class="row100 head">
+                                <th class="cell100 column1">Movie name</th>
+                                <th class="cell100 column2">State</th>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="table100-body js-pscroll">
+                    <table class="movie-table">
+                        <tbody>
+                            @foreach (var filmulCurrent in Model)
+                            {
+                                <tr id="@filmulCurrent.Id" class="row100 body">
+                                    <td class="cell100 column1">@filmulCurrent.Name</td>
+                                    @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
+                                    {
+                                        <td class="cell100 column2">Liber</td>
+                                    }
+                                    else if (filmulCurrent.IsRented == 1)
+                                    {
+                                        <td class="cell100 column2">Inchiriat</td>
+                                    }
+                                </tr>
+
+                                /* exemplu pentru scroll sa vezi cum arata*/
+                                <tr class="row100 body">
+                                    <td class="cell100 column1">Like a butterfly</td>
+                                    <td class="cell100 column2">Boxing</td>
+
+                                </tr>
+
+                                <tr class="row100 body">
+                                    <td class="cell100 column1">Mind & Body</td>
+                                    <td class="cell100 column2">Yoga</td>
+
+                                </tr>
+
+                                <tr class="row100 body">
+                                    <td class="cell100 column1">Crit Cardio</td>
+                                    <td class="cell100 column2">Gym</td>
+                                </tr>
+
+                                <tr class="row100 body">
+                                    <td class="cell100 column1">Wheel Pose Full Posture</td>
+                                    <td class="cell100 column2">Yoga</td>
+                                </tr>
+
+                                <tr class="row100 body">
+                                    <td class="cell100 column1">Playful Dancer's Flow</td>
+                                    <td class="cell100 column2">Yoga</td>
+                                </tr>
+
+                                <tr class="row100 body">
+                                    <td class="cell100 column1">Zumba Dance</td>
+                                    <td class="cell100 column2">Dance</td>
+                                </tr>
+
+                                <tr class="row100 body">
+                                    <td class="cell100 column1">Cardio Blast</td>
+                                    <td class="cell100 column2">Gym</td>
+                                </tr>
+
+                                <tr class="row100 body">
+                                    <td class="cell100 column1">Pilates Reformer</td>
+                                    <td class="cell100 column2">Gym</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
