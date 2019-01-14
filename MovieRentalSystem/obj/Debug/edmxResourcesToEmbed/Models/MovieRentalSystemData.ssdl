@@ -10,6 +10,7 @@
     <Property Name="RenterId" Type="uniqueidentifier" />
     <Property Name="An" Type="int" />
     <Property Name="Tip" Type="nvarchar" MaxLength="250" />
+    <Property Name="UrlPicture" Type="nvarchar" MaxLength="250" />
   </EntityType>
   <EntityType Name="User">
     <Key>

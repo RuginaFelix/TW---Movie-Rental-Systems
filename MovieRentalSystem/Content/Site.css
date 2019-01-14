@@ -309,7 +309,7 @@ th, td {
 }
 
 .column1 {
-    width: 33%;
+    width: 13%;
     padding-left: 40px;
 }
 
@@ -318,11 +318,11 @@ th, td {
 }
 
 .column3 {
-    width: 22%;
+    width: 13%;
 }
 
 .column4 {
-    width: 19%;
+    width: 13%;
 }
 
 .column5 {
@@ -451,3 +451,10 @@ ul {
     color: #b9b9b9;
 }
 /*end About box*/
+
+
+.movie-table img {
+    object-fit: cover;
+    width: 100px;
+    height: 150px;
+}

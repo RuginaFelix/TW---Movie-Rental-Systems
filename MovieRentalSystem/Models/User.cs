@@ -11,8 +11,7 @@ namespace MovieRentalSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,14 +21,8 @@ namespace MovieRentalSystem.Models
         }
     
         public System.Guid Id { get; set; }
-
-        [Required(ErrorMessage = "Parola este necesara")]
-        [DataType(DataType.Password)]
         public string Parola { get; set; }
-
-        [Required(ErrorMessage = "Email este necesar")]
         public string Email { get; set; }
-
         public string Adresa { get; set; }
         public string Nume { get; set; }
         public string Prenume { get; set; }

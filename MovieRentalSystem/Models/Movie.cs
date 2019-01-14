@@ -20,6 +20,7 @@ namespace MovieRentalSystem.Models
         public Nullable<System.Guid> RenterId { get; set; }
         public Nullable<int> An { get; set; }
         public string Tip { get; set; }
+        public string UrlPicture { get; set; }
     
         public virtual User User { get; set; }
     }

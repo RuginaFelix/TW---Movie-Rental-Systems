@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Movies">
       <EntityTypeMapping TypeName="MovieRentalSystemModel.Movie">
         <MappingFragment StoreEntitySet="Movie">
+          <ScalarProperty Name="UrlPicture" ColumnName="UrlPicture" />
           <ScalarProperty Name="Tip" ColumnName="Tip" />
           <ScalarProperty Name="An" ColumnName="An" />
           <ScalarProperty Name="RenterId" ColumnName="RenterId" />

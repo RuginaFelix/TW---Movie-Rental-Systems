@@ -1,6 +1,30 @@
 ﻿@using MovieRentalSystem.Models;
 @model IList<Movie>
 
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<style>
+    .input-group {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: #2f3640;
+        height: 40px;
+        border-radius: 40px;
+        padding: 1px;
+    }
+</style>
+
+<div class="container">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="text" id="Search" placeholder="Search" class="form-control" />
+            <a class="search-bth" href="#">
+                <i class="fas fa-search"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
 <div class="limiter">
     <div class="container-table100">
         <div class="wrap-table100">
@@ -9,8 +33,11 @@
                     <table>
                         <thead class="table-head">
                             <tr class="row100 head">
-                                <th class="cell100 column1">Movie name</th>
-                                <th class="cell100 column2">State</th>
+                                <th class="cell100 column1">Picture</th>
+                                <th class="cell100 column2">Movie name</th>
+                                <th class="cell100 column3">Tip</th>
+                                <th class="cell100 column4">An</th>
+                                <th class="cell100 column5">State</th>
                         </thead>
                     </table>
                 </div>
@@ -20,15 +47,18 @@
                         <tbody>
                             @foreach (var filmulCurrent in Model)
                             {
-                                <tr id="@filmulCurrent.Id" class="row100 body">
-                                    <td class="cell100 column1">@filmulCurrent.Name</td>
+                                <tr id="@filmulCurrent.Id" class="Search">
+                                    <td class="cell100 column1"> <img src="@filmulCurrent.UrlPicture"> </td>
+                                    <td class="cell100 column2">@filmulCurrent.Name</td>
+                                    <td class="cell100 column3">@filmulCurrent.Tip</td>
+                                    <td class="cell100 column3">@filmulCurrent.An</td>
                                     @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
                                     {
-                                        <td class="cell100 column2">Liber</td>
+                                        <td class="cell100 column5">Liber</td>
                                     }
                                     else if (filmulCurrent.IsRented == 1)
                                     {
-                                        <td class="cell100 column2">Inchiriat</td>
+                                        <td class="cell100 column5">Inchiriat</td>
                                     }
                                 </tr>
                             }
@@ -39,3 +69,24 @@
         </div>
     </div>
 </div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function Contains(text_one, text_two) {
+            if (text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#Search").keyup(function () {
+            var searchText = $("#Search").val().toLocaleLowerCase();
+            $(".Search").each(function () {
+                if (!Contains($(this).text().toLocaleLowerCase(), searchText)) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>
