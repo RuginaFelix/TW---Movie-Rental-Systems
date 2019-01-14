@@ -136,6 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\MovieRentalController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -162,6 +163,7 @@
       <DependentUpon>MovieRentalSystemData.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\ViewClasses\MovieViewClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -183,6 +185,7 @@
       <DependentUpon>MovieRentalSystemData.edmx</DependentUpon>
       <LastGenOutput>MovieRentalSystemData.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\ajaxHelper.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\MovieRentalSystemData.edmx">
@@ -219,9 +222,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\MovieRental\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Home\Modals\ModalInchiriaza.cshtml" />
+    <Content Include="Views\Home\Modals\_ModalBodyInchireaza.cshtml" />
+    <Content Include="Views\Home\Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Movie\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

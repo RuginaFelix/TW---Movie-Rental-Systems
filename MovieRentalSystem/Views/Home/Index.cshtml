@@ -1,41 +1,118 @@
 ﻿@using MovieRentalSystem.Models;
+@using MovieRentalSystem.Models.ViewClasses;
 @model IList<Movie>
+<style>
+    #inchirieri-modal {
+        width: 34%;
+        height: 76%;
+        position: absolute;
+        top: 5%;
+        left: 67%;
+        overflow: hidden;
+    }
 
-<div class="limiter">
-    <div class="container-table100">
-        <div class="wrap-table100">
-            <div class="table100 ver1 m-b-110">
-                <div class="table100-head">
-                    <table>
-                        <thead class="table-head">
-                            <tr class="row100 head">
-                                <th class="cell100 column1">Movie name</th>
-                                <th class="cell100 column2">State</th>
-                        </thead>
-                    </table>
-                </div>
+        #inchirieri-modal .modal-content {
+            height: 500px;
+        }
+        #inchirieri-modal .modal-body {
+            height: 74%;
+        }
+</style>
+<div class="positioning-container">
+    <div class="limiter">
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="table100 ver1 m-b-110">
+                    <div class="table100-head">
+                        <table>
+                            <thead class="table-head">
+                                <tr class="row100 head">
+                                    <th class="cell100 column1">Movie name</th>
+                                    <th class="cell100 column2">State</th>
+                                    <th class="cell100 column2">Actiuni</th>
+                            </thead>
+                        </table>
+                    </div>
 
-                <div class="table100-body js-pscroll">
-                    <table class="movie-table">
-                        <tbody>
-                            @foreach (var filmulCurrent in Model)
-                            {
-                                <tr id="@filmulCurrent.Id" class="row100 body">
-                                    <td class="cell100 column1">@filmulCurrent.Name</td>
-                                    @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
-                                    {
-                                        <td class="cell100 column2">Liber</td>
-                                    }
-                                    else if (filmulCurrent.IsRented == 1)
-                                    {
-                                        <td class="cell100 column2">Inchiriat</td>
-                                    }
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <div class="table100-body js-pscroll">
+                        <table class="movie-table">
+                            <tbody>
+                                @foreach (var filmulCurrent in Model)
+                                {
+                                    <tr id="@filmulCurrent.Id" class="row100 body">
+                                        <td class="cell100 column1">@filmulCurrent.Name</td>
+                                        @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
+                                        {
+                                            <td class="cell100 column2">Liber</td>
+                                        }
+                                        else if (filmulCurrent.IsRented == 1)
+                                        {
+                                            <td class="cell100 column2">Inchiriat</td>
+                                        }
+                                        <td class="cell100 column2">
+                                            <input type="button" value="Inchiriaza" onclick="IncrementCart('@filmulCurrent.Id')" />
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    var listFilmeInchiriate = [];
+
+    var IncrementCart = function (id) {
+        var dontPush = false;
+        listFilmeInchiriate.forEach(function (idFilm) {
+            if (idFilm == id) {
+                dontPush = true;
+                return;
+            }
+        });
+
+        if (dontPush == true) {
+            return;
+        }
+
+        listFilmeInchiriate.push(id);
+        var cartCounterCurrentValue = $(".cart-counter-value").text();
+        $(".cart-counter-value").text(parseInt(cartCounterCurrentValue) + 1);
+
+        saveMoviesId(listFilmeInchiriate);
+    }
+
+    var saveMoviesId = function (listaFilme) {
+        var url = "/Home/SaveItemsList";
+        ajaxHelper.post(url,
+            listaFilme,
+            function () {
+            },
+            function () {
+                alert("eroare");
+            }
+        );
+    }
+
+    $("#inchirieri-modal").on('hide.bs.modal', function () {
+        isOpen = false;
+    });
+
+    $(document).ready(function () {
+
+        $("#inchirieri-modal").modal({
+            backdrop: null,
+            keyboard: false
+        });
+
+        $("#inchirieri-modal").modal('hide');
+    });
+
+</script>

@@ -1,0 +1,16 @@
+﻿@using MovieRentalSystem.Models.ViewClasses;
+@model  IList<MovieViewClass>
+
+<div class="rented-movie-container">
+    <div>
+
+    </div>
+    <div>
+        <label style="font-weight:bolder">Nume</label>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div style="float:left;"><img src="@item.PozaURL" /></div>
+        <div style="float: left; clear: left;">@item.Nume</div>
+    }
+</div>

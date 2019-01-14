@@ -1,0 +1,37 @@
+﻿@using MovieRentalSystem.Models.ViewClasses;
+@model IList<MovieViewClass>
+
+@if (Model.Count == 0)
+{
+    <div>
+        Cosul tau este gol
+    </div>
+}
+else
+{
+    <table class="movie-table">
+        <tbody>
+            @foreach (var filmulCurrent in Model)
+            {
+                <tr id="@filmulCurrent.Id" class="row100 body">
+                    <td class="cell100 column1">@filmulCurrent.Nume</td>
+                    @if (filmulCurrent.IsRented == 0)
+                    {
+                        <td class="cell100 column2">Liber</td>
+                    }
+                    else if (filmulCurrent.IsRented == 1)
+                    {
+                        <td class="cell100 column2">Inchiriat</td>
+                    }
+                    <td class="cell100 column2">
+                        <input type="button" value="Sterge" onclick="" />
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+
+}

@@ -16,7 +16,10 @@
                 <li>@Html.ActionLink("Movie List", "Index", "Home")</li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                @*<li>@Html.ActionLink("MovieRental", "Index", "MovieRental")</li>*@
+                @{
+                    var a = "Cart(< span class='cart-counter-value'> 0 </span> )";
+                }
+                <li>@Html.ActionLink(a, "GoToCart", "Home")</li>
             </ul>
         </nav>
         <label for="navigation-toggle" class="navigation-toggle-label">
@@ -26,13 +29,13 @@
 
     <div class="container body-content">
         @RenderBody()
-        <footer>
-        </footer>
+        <footer></footer>
     </div>
 
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/ajaxHelper.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
