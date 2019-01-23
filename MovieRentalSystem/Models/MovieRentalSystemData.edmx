@@ -15,6 +15,7 @@
           <Property Name="RenterId" Type="uniqueidentifier" />
           <Property Name="An" Type="int" />
           <Property Name="Tip" Type="nvarchar" MaxLength="250" />
+          <Property Name="UrlPicture" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -71,6 +72,7 @@
           <Property Name="An" Type="Int32" />
           <Property Name="Tip" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="MovieRentalSystemModel.FK_Movie_User" FromRole="Movie" ToRole="User" />
+          <Property Name="UrlPicture" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -106,6 +108,7 @@
           <EntitySetMapping Name="Movies">
             <EntityTypeMapping TypeName="MovieRentalSystemModel.Movie">
               <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="UrlPicture" ColumnName="UrlPicture" />
                 <ScalarProperty Name="Tip" ColumnName="Tip" />
                 <ScalarProperty Name="An" ColumnName="An" />
                 <ScalarProperty Name="RenterId" ColumnName="RenterId" />

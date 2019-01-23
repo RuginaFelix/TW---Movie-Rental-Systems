@@ -27,9 +27,12 @@
                         <table>
                             <thead class="table-head">
                                 <tr class="row100 head">
-                                    <th class="cell100 column1">Movie name</th>
-                                    <th class="cell100 column2">State</th>
-                                    <th class="cell100 column2">Actiuni</th>
+                                    <th class="cell100 column1">Poza</th>
+                                    <th class="cell100 column2">Nume</th>
+                                    <th class="cell100 column3">Tip</th>
+                                    <th class="cell100 column4">An</th>
+                                    <th class="cell100 column5">Stare</th>
+                                    <th class="cell100 column6">Inchiriaza</th>
                             </thead>
                         </table>
                     </div>
@@ -40,16 +43,19 @@
                                 @foreach (var filmulCurrent in Model)
                                 {
                                     <tr id="@filmulCurrent.Id" class="row100 body">
-                                        <td class="cell100 column1">@filmulCurrent.Name</td>
+                                        <td class="cell100 column1"><img src="@filmulCurrent.UrlPicture" /></td>
+                                        <td class="cell100 column2">@filmulCurrent.Name</td>
+                                        <td class="cell100 column3">@filmulCurrent.Tip</td>
+                                        <td class="cell100 column4">@filmulCurrent.An</td>
                                         @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
                                         {
-                                            <td class="cell100 column2">Liber</td>
+                                            <td class="cell100 column5">Liber</td>
                                         }
                                         else if (filmulCurrent.IsRented == 1)
                                         {
-                                            <td class="cell100 column2">Inchiriat</td>
+                                            <td class="cell100 column5">Inchiriat</td>
                                         }
-                                        <td class="cell100 column2">
+                                        <td class="cell100 column6">
                                             <input type="button" value="Inchiriaza" onclick="IncrementCart('@filmulCurrent.Id')" />
                                         </td>
                                     </tr>

@@ -19,6 +19,7 @@
     <Property Name="An" Type="Int32" />
     <Property Name="Tip" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="User" Relationship="MovieRentalSystemModel.FK_Movie_User" FromRole="Movie" ToRole="User" />
+    <Property Name="UrlPicture" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="User">
     <Key>
