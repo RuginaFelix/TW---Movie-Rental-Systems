@@ -1,23 +1,99 @@
 ﻿@using MovieRentalSystem.Models;
 @using MovieRentalSystem.Models.ViewClasses;
 @model IList<Movie>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 <style>
-    #inchirieri-modal {
-        width: 34%;
-        height: 76%;
-        position: absolute;
-        top: 5%;
-        left: 67%;
-        overflow: hidden;
+    .search-bar {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        transition: all 1s;
+        width: 50px;
+        height: 50px;
+        background: white;
+        box-sizing: border-box;
+        border-radius: 25px;
+        border: 4px solid white;
+        padding: 5px;
+        margin-top: 6%;
     }
 
-        #inchirieri-modal .modal-content {
-            height: 500px;
-        }
-        #inchirieri-modal .modal-body {
-            height: 74%;
-        }
+    .form-control {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 42.5px;
+        line-height: 30px;
+        outline: 0;
+        border: 0;
+        display: none;
+        font-size: 1em;
+        border-radius: 20px;
+        padding: 0 20px;
+    }
+
+    .fa {
+        box-sizing: border-box;
+        padding: 10px;
+        width: 42.5px;
+        height: 42.5px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-radius: 50%;
+        color: #216a7c;
+        text-align: center;
+        font-size: 1.2em;
+        transition: all 1s;
+    }
+
+    form:hover {
+        width: 200px;
+        cursor: pointer;
+    }
+
+    form:hover input {
+        display: block;
+    }
+
+    form:hover .fa {
+        background-color: rgb(33, 106, 124);
+        color: white;
+    }
+
+    .rent-button {
+        background-color: #216a7c;
+        -moz-border-radius: 42px;
+        -webkit-border-radius: 42px;
+        border-radius: 42px;
+        border: 2px solid #18ab29;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Verdana;
+        font-size: 25px;
+        font-weight: bold;
+        padding: 5px 10px;
+        text-decoration: none;
+    }
+
+    .rent-button:hover {
+        background-color: white;
+        color: #216a7c;
+    }
 </style>
+
+
+<form action="" class="search-bar">
+    <input type="search" id="Search" placeholder="Search" class="form-control" />
+    <i class="fa fa-search"></i>
+</form>
+
 <div class="positioning-container">
     <div class="limiter">
         <div class="container-table100">
@@ -42,7 +118,7 @@
                             <tbody>
                                 @foreach (var filmulCurrent in Model)
                                 {
-                                    <tr id="@filmulCurrent.Id" class="row100 body">
+                                    <tr id="@filmulCurrent.Id" class="Search">
                                         <td class="cell100 column1"><img src="@filmulCurrent.UrlPicture" /></td>
                                         <td class="cell100 column2">@filmulCurrent.Name</td>
                                         <td class="cell100 column3">@filmulCurrent.Tip</td>
@@ -56,7 +132,7 @@
                                             <td class="cell100 column5">Inchiriat</td>
                                         }
                                         <td class="cell100 column6">
-                                            <input type="button" value="Inchiriaza" onclick="IncrementCart('@filmulCurrent.Id')" />
+                                            <input class="rent-button" type="button" value="+" onclick="IncrementCart('@filmulCurrent.Id')" />
                                         </td>
                                     </tr>
                                 }
@@ -121,4 +197,21 @@
         $("#inchirieri-modal").modal('hide');
     });
 
+    $(document).ready(function () {
+        function Contains(text_one, text_two) {
+            if (text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#Search").keyup(function () {
+            var searchText = $("#Search").val().toLocaleLowerCase();
+            $(".Search").each(function () {
+                if (!Contains($(this).text().toLocaleLowerCase(), searchText)) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        });
+    });
 </script>
