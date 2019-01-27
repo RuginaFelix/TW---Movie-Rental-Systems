@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using MovieRentalSystem.Models.ViewClasses;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,10 +17,9 @@
                 <li>@Html.ActionLink("Movie List", "Index", "Home")</li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                @{
-                    var a = "Cart(< span class='cart-counter-value'> 0 </span> )";
-                }
-                <li>@Html.ActionLink(a, "GoToCart", "Home")</li>
+                <li>@Html.ActionLink("My movies", "GoToMyMovies", "Home")</li>
+                <li><a href="/Home/GoToCart">Cart(<span class='cart-counter-value'>@GlobalClass.CartCounter</span>)</a></li>
+                <li class="logout-button pull-right" style="margin-right: 20px;">@Html.ActionLink("Logout", "Logout", "Login")</li>
             </ul>
         </nav>
         <label for="navigation-toggle" class="navigation-toggle-label">

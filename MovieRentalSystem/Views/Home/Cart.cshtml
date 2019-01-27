@@ -18,55 +18,115 @@
         text-decoration: none;
     }
 
-    .rent-button:hover {
-        background-color: white;
-        color: #216a7c;
-    }
+        .rent-button:hover {
+            background-color: white;
+            color: #216a7c;
+        }
 </style>
+
+@{
+    ViewBag.MovieIds = new List<Guid>();
+    foreach (var item in Model)
+    {
+        ViewBag.MovieIds.Add(item.Id);
+    }
+}
 
 @if (Model.Count == 0)
 {
-    <div>
+    <div style="margin-top: 30px; color: white;">
         Cosul tau este gol
     </div>
 }
 else
 {
-    <div class="positioning-container">
-        <div class="limiter">
-            <div class="container-table100">
-                <div class="wrap-table100">
-                    <div class="table100 ver1 m-b-110">
-                        <div class="table100-head">
-                            <table>
-                                <thead class="table-head">
-                                    <tr class="row100 head">
-                                        <th class="cell100 column1">Poza</th>
-                                        <th class="cell100 column2">Nume</th>
-                                        <th class="cell100 column2">Sterge</th>
-                                </thead>
-                            </table>
-                        </div>
+    <div id="movies-table-container">
+        <div class="positioning-container">
+            <div class="limiter">
+                <div class="container-table100">
+                    <div class="wrap-table100">
+                        <div class="table100 ver1 m-b-110">
+                            <div class="table100-head">
+                                <table>
+                                    <thead class="table-head">
+                                        <tr class="row100 head">
+                                            <th class="cell100 column1">Poza</th>
+                                            <th class="cell100 column2">Nume</th>
+                                            <th class="cell100 column2">Sterge</th>
+                                    </thead>
+                                </table>
+                            </div>
 
-                        <div class="table100-body js-pscroll">
-                            <table class="movie-table">
-                                <tbody>
-                                    @foreach (var filmulCurrent in Model)
-                                    {
-                                        <tr id="@filmulCurrent.Id" class="row100 body">
-                                            <td class="cell100 column1"><img src="@filmulCurrent.PozaURL" /></td>
-                                            <td class=" cell100 column2">@filmulCurrent.Nume</td> 
-                                            <td class="cell100 column3">
-                                                <input class="rent-button" type="button" value="-" onclick="" />
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                            <div class="table100-body js-pscroll">
+                                <table class="movie-table">
+                                    <tbody>
+                                        @foreach (var filmulCurrent in Model)
+                                        {
+                                            <tr id="@filmulCurrent.Id" class="row100 body">
+                                                <td class="cell100 column1"><img src="@filmulCurrent.PozaURL" /></td>
+                                                <td class=" cell100 column2">@filmulCurrent.Nume</td>
+                                                <td class="cell100 column3">
+                                                    @{ 
+                                                        var asdfMovies = ViewBag.IsForMyMovies;
+                                                    }
+                                                    <input class="rent-button" type="button" value="-" onclick="removeMovie('@filmulCurrent.Id', '@asdfMovies')" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                @if (ViewBag.IsForMyMovies == null || ViewBag.IsForMyMovies == false)
+                                {
+                                    <button class="btn-primary" onclick="SaveMyMovies('@Json.Encode(ViewBag.MovieIds)')">SUBMIT MOVIES</button>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 }
+
+
+<script type="text/javascript">
+
+    var removeMovie = function (idFilm, isCart) {
+        debugger;
+        var url = "";
+
+        if (isCart != 'onclick') {
+            url = "/Home/RemoveItemFromCart?filmIds=" + idFilm;
+        } else {
+            url = "/Home/RemoveMovieFromUser?filmIds=" + idFilm;
+        }
+
+        ajaxHelper.getViewWithoutData(url,
+            function (partialView) {
+                location.reload();
+                console.log("film scos din cart!");
+            },
+            function () {
+                alert("eroare");
+            }
+        );
+    }
+
+    var SaveMyMovies = function (movieIdsS) {
+        debugger;
+        var url = "/Home/SaveMovies?MovieIds=" + movieIdsS;
+        ajaxHelper.getWithoutData(url,
+            function () {
+                debugger;
+                location.reload();
+            },
+            function () {
+                location.reload();
+                alert("eroare");
+            }
+        );
+    }
+
+
+</script>

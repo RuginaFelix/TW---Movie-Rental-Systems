@@ -27,6 +27,7 @@ namespace MovieRentalSystem.Models
         public string Nume { get; set; }
         public string Prenume { get; set; }
         public Nullable<int> AnDeNastere { get; set; }
+        public Nullable<int> UserType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Movie> Movies { get; set; }

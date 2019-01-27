@@ -1,4 +1,5 @@
 ﻿using MovieRentalSystem.Models;
+using MovieRentalSystem.Models.ViewClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,12 @@ namespace MovieRentalSystem.Controllers
             using (var context = new MovieRentalSystemEntities())
             {
                 var s = context.Users.Where(usr => usr.Email == model.Email && usr.Parola == model.Parola).FirstOrDefault();
-
+                if(s != null)
+                {
+                    GlobalClass.UserId = s.Id;
+                    GlobalClass.UserType = s.UserType != null? s.UserType.Value : 0;
+                    GlobalClass.UserEmail = s.Email;
+                }
                 if (s == null)
                 {
                     ViewBag.NotValidUser = "Email sau parola gresita";
@@ -32,6 +38,11 @@ namespace MovieRentalSystem.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+        }
+
+        public ActionResult Logout()
+        {
+            return RedirectToAction("Index");
         }
     }
 }

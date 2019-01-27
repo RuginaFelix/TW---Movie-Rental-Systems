@@ -14,10 +14,6 @@ namespace MovieRentalSystem.Controllers
 
         public ActionResult Index()
         {
-            if(MoviesList != null)
-            {
-                MoviesList.Clear();
-            }
             using (var context = new MovieRentalSystemEntities())
             {
                 var returnedList = new List<Movie>();
@@ -53,11 +49,133 @@ namespace MovieRentalSystem.Controllers
         public void SaveItemsList(List<Guid> movieIds)
         {
             MoviesList = movieIds;
+            GlobalClass.CartCounter = MoviesList.Count();
         }
 
         public ActionResult GoToCart()
         {
+            ViewBag.IsForMyMovies = false;
             List<MovieViewClass> movieList = new List<MovieViewClass>();
+            return RefreshMovies(movieList);
+        }
+
+        public ActionResult RemoveItemFromCart(List<Guid> filmIds)
+        {
+            foreach (var id in filmIds)
+            {
+                MoviesList.Remove(id);
+                GlobalClass.CartCounter = MoviesList.Count();
+            }
+            return RefreshMovies();
+        }
+
+        public ActionResult RemoveMovieFromUser(List<Guid> filmIds)
+        {
+            using (var context = new MovieRentalSystemEntities())
+            {
+                var myId = GlobalClass.UserId;
+                var myself = context.Users.Single(t => t.Id == myId);
+                if(myself == null)
+                {
+                    return null;
+                }
+
+                foreach (var item in filmIds)
+                {
+                    var movieToRemove = myself.Movies.Single(t => t.Id == item);
+                    if(movieToRemove == null)
+                    {
+                        continue;
+                    }
+
+                    movieToRemove.RenterId = null;
+                    movieToRemove.IsRented = 0;
+                    myself.Movies.Remove(movieToRemove);
+                }
+                context.SaveChanges();
+
+                return RefreshMovies();
+            }
+        }
+
+        public ActionResult GoToMyMovies()
+        {
+            ViewBag.IsForMyMovies = true;
+            List<MovieViewClass> movieList = new List<MovieViewClass>();
+            var myId = GlobalClass.UserId;
+
+            using (var context = new MovieRentalSystemEntities())
+            {
+                var my = context.Users.Single(usr => usr.Id == myId);
+                if (my == null)
+                {
+                    return View("~/Views/Home/Cart.cshtml", movieList);
+                }
+
+                if (my.Movies != null && my.Movies.Count > 0)
+                {
+                    foreach (var movie in my.Movies)
+                    {
+                        var viewMovie = new MovieViewClass()
+                        {
+                            Id = movie.Id,
+                            Nume = movie.Name,
+                            PozaURL = movie.UrlPicture,
+                            IsRented = movie.IsRented ?? 0,
+                        };
+                        movieList.Add(viewMovie);
+                    }
+                }
+
+                return View("~/Views/Home/Cart.cshtml", movieList);
+            }
+        }
+
+        public string SaveMovies(string MovieIds)
+        {
+            using (var context = new MovieRentalSystemEntities())
+            {
+                var my = context.Users.Single(usr => usr.Id == GlobalClass.UserId);
+                if (my == null)
+                {
+                    return "not ok";
+                }
+
+                var movieSmtg = MovieIds.Split(',');
+                var MovieListGood = new List<Guid>();
+
+                for (int i = 0; i < movieSmtg.Length; i++)
+                {
+                    movieSmtg[i] = movieSmtg[i].Trim(new Char[] { '"', ']', '[', '\"' });
+
+                    MovieListGood.Add(Guid.Parse(movieSmtg[i]));
+                }
+
+                foreach (var item in MovieListGood)
+                {
+                    var movieToAdd = context.Movies.Single(t => t.Id == item);
+                    if (movieToAdd == null)
+                    {
+                        continue;
+                    }
+                    movieToAdd.IsRented = 1;
+                    movieToAdd.RenterId = my.Id;
+                    my.Movies.Add(movieToAdd);
+                }
+                context.SaveChanges();
+                MoviesList.Clear();
+                GlobalClass.CartCounter = MoviesList.Count();
+                return "ok";
+            }
+        }
+
+        private ActionResult RefreshMovies(List<MovieViewClass> movieList = null)
+        {
+            if (movieList == null)
+            {
+                movieList = new List<MovieViewClass>();
+            }
+
             using (var context = new MovieRentalSystemEntities())
             {
                 if (MoviesList != null && MoviesList.Count > 0)
@@ -69,7 +187,7 @@ namespace MovieRentalSystem.Controllers
                         {
                             Id = currentMovie.Id,
                             Nume = currentMovie.Name,
-                            //PozaURL = currentMovie.UrlPoza,
+                            PozaURL = currentMovie.UrlPicture,
                             IsRented = currentMovie.IsRented ?? 0,
                         };
                         movieList.Add(viewMovie);

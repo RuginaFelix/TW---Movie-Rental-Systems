@@ -57,14 +57,14 @@
         cursor: pointer;
     }
 
-    form:hover input {
-        display: block;
-    }
+        form:hover input {
+            display: block;
+        }
 
-    form:hover .fa {
-        background-color: rgb(33, 106, 124);
-        color: white;
-    }
+        form:hover .fa {
+            background-color: rgb(33, 106, 124);
+            color: white;
+        }
 
     .rent-button {
         background-color: #216a7c;
@@ -82,10 +82,10 @@
         text-decoration: none;
     }
 
-    .rent-button:hover {
-        background-color: white;
-        color: #216a7c;
-    }
+        .rent-button:hover {
+            background-color: white;
+            color: #216a7c;
+        }
 </style>
 
 
@@ -131,9 +131,12 @@
                                         {
                                             <td class="cell100 column5">Inchiriat</td>
                                         }
-                                        <td class="cell100 column6">
-                                            <input class="rent-button" type="button" value="+" onclick="IncrementCart('@filmulCurrent.Id')" />
-                                        </td>
+                                        @if (filmulCurrent.IsRented != 1)
+                                        {
+                                            <td class="cell100 column6">
+                                                <input class="rent-button" type="button" value="+" onclick="IncrementCart('@filmulCurrent.Id')" />
+                                            </td>
+                                        }
                                     </tr>
                                 }
 

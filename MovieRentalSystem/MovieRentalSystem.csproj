@@ -162,6 +162,8 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>MovieRentalSystemData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\USER_TYPE_ENUM.cs" />
+    <Compile Include="Models\ViewClasses\GlobalClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\ViewClasses\MovieViewClass.cs" />
   </ItemGroup>
@@ -220,7 +222,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\MovieRental\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Home\Modals\ModalInchiriaza.cshtml" />
     <Content Include="Views\Home\Modals\_ModalBodyInchireaza.cshtml" />
