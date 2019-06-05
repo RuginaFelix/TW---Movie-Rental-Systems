@@ -10,23 +10,15 @@ namespace MovieRentalSystem.Controllers
 {
     public class HomeController : Controller
     {
-        public static List<Guid> MoviesList { get; set; }
-
         public ActionResult Index()
         {
-            using (var context = new MovieRentalSystemEntities())
+            using (var context = new MedicalEntities())
             {
-                var returnedList = new List<Movie>();
-                var moviesList = context.Movies;
-
-                foreach (var item in moviesList)
-                {
-                    returnedList.Add(item);
-                }
+                List<Pacient> returnedList = GetAllPacients(context);
 
                 if (returnedList == null)
                 {
-                    return View(new List<Movie>());
+                    return View(new List<Pacient>());
                 }
 
                 return View(returnedList);
@@ -46,157 +38,111 @@ namespace MovieRentalSystem.Controllers
             return View();
         }
 
-        public void SaveItemsList(List<Guid> movieIds)
+        public ActionResult GetNotes(Guid userId)
         {
-            MoviesList = movieIds;
-            GlobalClass.CartCounter = MoviesList.Count();
-        }
-
-        public ActionResult GoToCart()
-        {
-            ViewBag.IsForMyMovies = false;
-            List<MovieViewClass> movieList = new List<MovieViewClass>();
-            return RefreshMovies(movieList);
-        }
-
-        public ActionResult RemoveItemFromCart(List<Guid> filmIds)
-        {
-            foreach (var id in filmIds)
+            using (var context = new MedicalEntities())
             {
-                MoviesList.Remove(id);
-                GlobalClass.CartCounter = MoviesList.Count();
-            }
-            return RefreshMovies();
-        }
-
-        public ActionResult RemoveMovieFromUser(List<Guid> filmIds)
-        {
-            using (var context = new MovieRentalSystemEntities())
-            {
-                var myId = GlobalClass.UserId;
-                var myself = context.Users.Single(t => t.Id == myId);
-                if(myself == null)
+                var returnedModel = new List<NotesViewModel>();
+                var messages = context.Mesajes.Where(t => t.ReciverId == userId).ToList();
+                if (messages == null || messages.Count() <= 0)
                 {
-                    return null;
+
+                    return PartialView("~/Views/Home/Modals/_ModalMesajeBody.cshtml", returnedModel);
                 }
 
-                foreach (var item in filmIds)
+                foreach (var item in messages)
                 {
-                    var movieToRemove = myself.Movies.Single(t => t.Id == item);
-                    if(movieToRemove == null)
+                    var newMessage = new NotesViewModel()
                     {
-                        continue;
+                        Id = item.Id,
+                        AuthorId = item.AuthorId.Value,
+                        ReciverId = item.ReciverId.Value,
+                        Mesaj = item.Mesaj
+                    };
+
+                    if (item.AuthorType == (int)AuthorType.MEDIC)
+                    {
+                        var autor = context.Medics.Single(t => t.UserId == item.AuthorId);
+                        newMessage.AuthorName = autor.Nume + " " + autor.Prenume;
+
+                        var reciver = context.Pacients.Single(t => t.UserId == item.ReciverId);
+                        newMessage.ReciverName = reciver.Nume + " " + reciver.Prenume;
+
+                    }
+                    else if (item.AuthorType == (int)AuthorType.PACIENT)
+                    {
+                        var autor = context.Pacients.Single(t => t.UserId == item.AuthorId);
+                        newMessage.AuthorName = autor.Nume + " " + autor.Prenume;
+
+                        var reciver = context.Medics.Single(t => t.UserId == item.ReciverId);
+                        newMessage.ReciverName = reciver.Nume + " " + reciver.Prenume;
                     }
 
-                    movieToRemove.RenterId = null;
-                    movieToRemove.IsRented = 0;
-                    myself.Movies.Remove(movieToRemove);
+                    returnedModel.Add(newMessage);
                 }
+
+                return PartialView("~/Views/Home/Modals/_ModalMesajeBody.cshtml", returnedModel);
+            }
+        }
+
+        public JsonResult SaveMessage(string message, Guid senderId, Guid reciverId)
+        {
+            using (var context = new MedicalEntities())
+            {
+                var newMessage = new Mesaje()
+                {
+                    Id = Guid.NewGuid(),
+                    AuthorId = senderId,
+                    Mesaj = message,
+                    ReciverId = reciverId
+                };
+
+                if(GlobalClass.UserType == (int)USER_TYPE_ENUM.MEDIC)
+                {
+                    newMessage.AuthorType = (int)AuthorType.MEDIC;
+
+                } else if (GlobalClass.UserType == (int)USER_TYPE_ENUM.SUPRAVEGHETOR)
+                {
+                    newMessage.AuthorType = (int)AuthorType.SUPRAVEGHETOR;
+
+                } else if (GlobalClass.UserType == (int)USER_TYPE_ENUM.PACIENT)
+                {
+                    newMessage.AuthorType = (int)AuthorType.PACIENT;
+                }
+
+                context.Mesajes.Add(newMessage);
                 context.SaveChanges();
 
-                return RefreshMovies();
+                return Json(true);
             }
         }
 
-        public ActionResult GoToMyMovies()
+        public JsonResult DeleteNote(Guid noteId)
         {
-            ViewBag.IsForMyMovies = true;
-            List<MovieViewClass> movieList = new List<MovieViewClass>();
-            var myId = GlobalClass.UserId;
-
-            using (var context = new MovieRentalSystemEntities())
+            using (var context = new MedicalEntities())
             {
-                var my = context.Users.Single(usr => usr.Id == myId);
-                if (my == null)
+                var messageToDelete = context.Mesajes.Single(t => t.Id == noteId);
+                if(messageToDelete != null)
                 {
-                    return View("~/Views/Home/Cart.cshtml", movieList);
+                    context.Mesajes.Remove(messageToDelete);
                 }
 
-                if (my.Movies != null && my.Movies.Count > 0)
-                {
-                    foreach (var movie in my.Movies)
-                    {
-                        var viewMovie = new MovieViewClass()
-                        {
-                            Id = movie.Id,
-                            Nume = movie.Name,
-                            PozaURL = movie.UrlPicture,
-                            IsRented = movie.IsRented ?? 0,
-                        };
-                        movieList.Add(viewMovie);
-                    }
-                }
-
-                return View("~/Views/Home/Cart.cshtml", movieList);
-            }
-        }
-
-        public string SaveMovies(string MovieIds)
-        {
-            using (var context = new MovieRentalSystemEntities())
-            {
-                var my = context.Users.Single(usr => usr.Id == GlobalClass.UserId);
-                if (my == null)
-                {
-                    return "not ok";
-                }
-
-                var movieSmtg = MovieIds.Split(',');
-                var MovieListGood = new List<Guid>();
-
-                for (int i = 0; i < movieSmtg.Length; i++)
-                {
-                    movieSmtg[i] = movieSmtg[i].Trim(new Char[] { '"', ']', '[', '\"' });
-
-                    MovieListGood.Add(Guid.Parse(movieSmtg[i]));
-                }
-
-                foreach (var item in MovieListGood)
-                {
-                    var movieToAdd = context.Movies.Single(t => t.Id == item);
-                    if (movieToAdd == null)
-                    {
-                        continue;
-                    }
-                    movieToAdd.IsRented = 1;
-                    movieToAdd.RenterId = my.Id;
-                    my.Movies.Add(movieToAdd);
-                }
                 context.SaveChanges();
-                MoviesList.Clear();
-                GlobalClass.CartCounter = MoviesList.Count();
-                return "ok";
+
+                return Json(true);
             }
         }
-
-        private ActionResult RefreshMovies(List<MovieViewClass> movieList = null)
+        private static List<Pacient> GetAllPacients(MedicalEntities context)
         {
-            if (movieList == null)
+            var returnedList = new List<Pacient>();
+            var pacientList = context.Pacients;
+
+            foreach (var item in pacientList)
             {
-                movieList = new List<MovieViewClass>();
+                returnedList.Add(item);
             }
 
-            using (var context = new MovieRentalSystemEntities())
-            {
-                if (MoviesList != null && MoviesList.Count > 0)
-                {
-                    foreach (var id in MoviesList)
-                    {
-                        var currentMovie = context.Movies.Single(movie => movie.Id == id);
-                        var viewMovie = new MovieViewClass()
-                        {
-                            Id = currentMovie.Id,
-                            Nume = currentMovie.Name,
-                            PozaURL = currentMovie.UrlPicture,
-                            IsRented = currentMovie.IsRented ?? 0,
-                        };
-                        movieList.Add(viewMovie);
-                    }
-                }
-
-                return View("~/Views/Home/Cart.cshtml", movieList);
-            }
+            return returnedList;
         }
-
     }
 }

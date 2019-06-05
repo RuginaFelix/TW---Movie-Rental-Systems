@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MedicalDataBaseModelStoreContainer" CdmEntityContainer="MedicalEntities">
+    <EntitySetMapping Name="Alarmas">
+      <EntityTypeMapping TypeName="MedicalDataBaseModel.Alarma">
+        <MappingFragment StoreEntitySet="Alarma">
+          <ScalarProperty Name="Ora" ColumnName="Ora" />
+          <ScalarProperty Name="Cod_Alarma" ColumnName="Cod_Alarma" />
+          <ScalarProperty Name="Declansatorul" ColumnName="Declansatorul" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Provenienta" ColumnName="Provenienta" />
+          <ScalarProperty Name="Tip_Alarma" ColumnName="Tip_Alarma" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medics">
+      <EntityTypeMapping TypeName="MedicalDataBaseModel.Medic">
+        <MappingFragment StoreEntitySet="Medic">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="AdresaCabinet" ColumnName="AdresaCabinet" />
+          <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+          <ScalarProperty Name="Nume" ColumnName="Nume" />
+          <ScalarProperty Name="CNP" ColumnName="CNP" />
+          <ScalarProperty Name="CodPostal" ColumnName="CodPostal" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mesajes">
+      <EntityTypeMapping TypeName="MedicalDataBaseModel.Mesaje">
+        <MappingFragment StoreEntitySet="Mesaje">
+          <ScalarProperty Name="AuthorType" ColumnName="AuthorType" />
+          <ScalarProperty Name="Mesaj" ColumnName="Mesaj" />
+          <ScalarProperty Name="ReciverId" ColumnName="ReciverId" />
+          <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pacients">
+      <EntityTypeMapping TypeName="MedicalDataBaseModel.Pacient">
+        <MappingFragment StoreEntitySet="Pacient">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+          <ScalarProperty Name="Varsta" ColumnName="Varsta" />
+          <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+          <ScalarProperty Name="Nume" ColumnName="Nume" />
+          <ScalarProperty Name="CNP" ColumnName="CNP" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Supraveghetors">
+      <EntityTypeMapping TypeName="MedicalDataBaseModel.Supraveghetor">
+        <MappingFragment StoreEntitySet="Supraveghetor">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="AlaramaId" ColumnName="AlaramaId" />
+          <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+          <ScalarProperty Name="Nume" ColumnName="Nume" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="MedicalDataBaseModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Parola" ColumnName="Parola" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

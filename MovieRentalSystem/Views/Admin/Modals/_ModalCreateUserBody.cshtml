@@ -1,0 +1,27 @@
+﻿@using MovieRentalSystem.Models.ViewClasses;
+@model UserViewModel
+
+    <div class="create-user-container float-left">
+        <div class="float-left clear-left">
+            <label class="float-left clear-left">Email</label>
+            <input class="float-left clear-left" id="email" value="@Model.Email" />
+        </div>
+        <div class="float-left clear-left">
+            <label class="float-left clear-left">Parola</label>
+            <input class="float-left clear-left" id="parola" value="@Model.Parola" />
+        </div>
+        <div class="float-left clear-left">
+            <label class="float-left clear-left">Confirma Parola</label>
+            <input class="float-left clear-left" id="confirmaParola" value="@Model.ConfirmaParola"/>
+        </div>
+        <div class="float-left clear-left">
+            <label class="float-left clear-left">Tipul de user</label>
+            <select id="tip-user" class="float-left clear-left">
+                <option value="">Alege...</option>
+                @foreach (var item in ViewBag.UserTypes)
+                {
+                    <option value="@item.value">@item.name</option>
+                }
+            </select>
+        </div>
+    </div>

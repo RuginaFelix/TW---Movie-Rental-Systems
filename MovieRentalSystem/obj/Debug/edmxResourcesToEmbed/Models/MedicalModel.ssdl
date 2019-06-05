@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MedicalDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Alarma">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Tip_Alarma" Type="int" />
+    <Property Name="Provenienta" Type="nvarchar" MaxLength="50" />
+    <Property Name="Data" Type="date" />
+    <Property Name="Declansatorul" Type="uniqueidentifier" />
+    <Property Name="Cod_Alarma" Type="int" />
+    <Property Name="Ora" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Medic">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CodPostal" Type="int" />
+    <Property Name="CNP" Type="nvarchar" MaxLength="50" />
+    <Property Name="Nume" Type="nvarchar" MaxLength="50" />
+    <Property Name="Prenume" Type="nvarchar" MaxLength="50" />
+    <Property Name="AdresaCabinet" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserId" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Mesaje">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AuthorId" Type="uniqueidentifier" />
+    <Property Name="ReciverId" Type="uniqueidentifier" />
+    <Property Name="Mesaj" Type="nvarchar" MaxLength="850" />
+    <Property Name="AuthorType" Type="int" />
+  </EntityType>
+  <EntityType Name="Pacient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CNP" Type="nvarchar" MaxLength="50" />
+    <Property Name="Nume" Type="nvarchar" MaxLength="250" />
+    <Property Name="Prenume" Type="nvarchar" MaxLength="250" />
+    <Property Name="Varsta" Type="int" />
+    <Property Name="Adresa" Type="nvarchar" MaxLength="250" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserId" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Supraveghetor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Nume" Type="nvarchar" MaxLength="50" />
+    <Property Name="Prenume" Type="nvarchar" MaxLength="50" />
+    <Property Name="AlaramaId" Type="uniqueidentifier" />
+    <Property Name="UserId" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Parola" Type="nvarchar" MaxLength="250" />
+    <Property Name="Email" Type="nvarchar" MaxLength="250" />
+    <Property Name="UserType" Type="int" />
+  </EntityType>
+  <Association Name="FK_Medic_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Medic" Type="Self.Medic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Medic">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pacient_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Pacient" Type="Self.Pacient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Pacient">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Supraveghetor_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Supraveghetor" Type="Self.Supraveghetor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Supraveghetor">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MedicalDataBaseModelStoreContainer">
+    <EntitySet Name="Alarma" EntityType="Self.Alarma" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medic" EntityType="Self.Medic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mesaje" EntityType="Self.Mesaje" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pacient" EntityType="Self.Pacient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Supraveghetor" EntityType="Self.Supraveghetor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Medic_User" Association="Self.FK_Medic_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Medic" EntitySet="Medic" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pacient_User" Association="Self.FK_Pacient_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Pacient" EntitySet="Pacient" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Supraveghetor_User" Association="Self.FK_Supraveghetor_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Supraveghetor" EntitySet="Supraveghetor" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,28 @@
+﻿@using MovieRentalSystem.Models.ViewClasses;
+@model IList<NotesViewModel>
+
+<div class="message-container">
+    @foreach (var item in Model)
+    {
+        <div class="actual-message">
+            <div class="delete">
+                <span onclick="deleteNote('@item.Id', '@item.ReciverId')">X</span>
+            </div>
+            <div id="@item.AuthorId">
+                <label>FROM: </label>
+                <label>@item.AuthorName</label>
+            </div>
+            <div id="@item.ReciverId">
+                <label>TO: </label>
+                <label>@item.ReciverName</label>
+            </div>
+            <div class="padding-10">
+                <span>@item.Mesaj</span>
+            </div>
+        </div>
+    }
+    <div class="send-message-container">
+        <label class="float-left">New message</label>
+        <textarea id="new-message-input"></textarea>
+    </div>
+</div>

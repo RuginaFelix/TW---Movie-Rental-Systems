@@ -19,7 +19,7 @@ namespace MovieRentalSystem.Controllers
         [HttpPost]
         public ActionResult Autentification(MovieRentalSystem.Models.User model)
         {
-            using (var context = new MovieRentalSystemEntities())
+            using (var context = new MedicalEntities())
             {
                 var s = context.Users.Where(usr => usr.Email == model.Email && usr.Parola == model.Parola).FirstOrDefault();
                 if(s != null)
@@ -35,7 +35,23 @@ namespace MovieRentalSystem.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    switch ((USER_TYPE_ENUM)GlobalClass.UserType)
+                    {
+                        case USER_TYPE_ENUM.ADMIN:
+                            return RedirectToAction("Index", "Admin");
+                        case USER_TYPE_ENUM.USER:
+                            break;
+                        case USER_TYPE_ENUM.MEDIC:
+                            return RedirectToAction("Index", "Home");
+                        case USER_TYPE_ENUM.SUPRAVEGHETOR:
+                            break;
+                        case USER_TYPE_ENUM.PACIENT:
+                            return RedirectToAction("Index", "Pacient");
+                        default:
+                            break;
+                    }
+
+                    return null;
                 }
             }
         }

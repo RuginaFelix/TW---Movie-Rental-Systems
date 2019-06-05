@@ -1,0 +1,144 @@
+﻿@using MovieRentalSystem.Models;
+@using MovieRentalSystem.Models.ViewClasses;
+@model IList<User>
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<form action="" class="search-bar">
+    <input type="search" id="Search" placeholder="Search" class="form-control" />
+    <i class="fa fa-search"></i>
+</form>
+<button class="pull-right margin-10 btn-primary" onclick="showCreateUserModal()">Creaza User</button>
+<div class="positioning-container">
+    <div class="limiter">
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="table100 ver1 m-b-110">
+                    <div class="table100-head">
+                        <table>
+                            <thead class="table-head">
+                                <tr class="row100 head">
+                                    <th class="entries cell100 column1">Tip User</th>
+                                    <th class="entries cell100 column2">Email</th>
+                                    <th class="entries cell100 column3">Altele</th>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table100-body js-pscroll" id="table-to-refresh">
+                        @Html.Partial("~/Views/Admin/_Table.cshtml", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Admin/Modals/ModalCreateUser.cshtml", new UserViewModel())
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    var deleteUser = function (userId) {
+
+        ajaxHelper.post(
+            '/Admin/DeleteUser',
+            {
+                userId: userId
+            },
+            function (response) {
+                debugger;
+                if (response) {
+                    ajaxHelper.getView(
+                        '/Admin/GetUsers',
+                        {
+                        },
+                        function (partialView) {
+                            $("#table-to-refresh").html(partialView);
+                        },
+                        function (err) {
+                            alert('error');
+                        }
+                    );
+                }
+
+            },
+            function () {
+                alert('error');
+            }
+        );
+
+
+    }
+
+    var showCreateUserModal = function () {
+        $('#create-user-modal').modal('show');
+    }
+
+    $('#create-user-modal').on('hidden.bs.modal', function (e) {
+        $('#email').val("");
+        $('#parola').val("");
+        $('#tip-user').val("");
+        $('#confirmaParola').val("");
+    });
+
+    var createUser = function () {
+        debugger;
+        var email =          $('#email').val();
+        var parola =         $('#parola').val();
+        var userType =       $('#tip-user').val();
+        var confirmaParola = $('#confirmaParola').val();
+
+        if (parola != confirmaParola) {
+            return;
+        }
+
+        ajaxHelper.post(
+            '/Admin/SaveUser',
+            {
+                Email: email,
+                Parola: parola,
+                ConfirmaParola: confirmaParola,
+                UserType: userType,
+            },
+            function (response) {
+                debugger;
+                if (response) {
+                    ajaxHelper.getView(
+                        '/Admin/GetUsers',
+                        {
+                        },
+                        function (partialView) {
+                            $('#create-user-modal').modal('hide');
+                            $("#table-to-refresh").html(partialView);
+                        },
+                        function (err) {
+                            alert('error');
+                        }
+                    );
+                }
+            },
+            function () {
+                alert('error');
+            }
+        );
+
+    }
+
+
+    $(document).ready(function () {
+        function Contains(text_one, text_two) {
+            if (text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#Search").keyup(function () {
+            var searchText = $("#Search").val().toLocaleLowerCase();
+            $(".Search").each(function () {
+                if (!Contains($(this).text().toLocaleLowerCase(), searchText)) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>

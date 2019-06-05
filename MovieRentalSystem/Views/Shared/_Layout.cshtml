@@ -4,21 +4,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Uganda Rental</title>
+    <title>@ViewBag.Title - MedHelp</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="html-layout">
     <header class="navigation-header">
-        <h1 class="logo" style="color:#E1F5FA">Uganda Movies</h1>
+        <h1 class="logo" style="color:#E1F5FA">MedHelp</h1>
         <input type="checkbox" id="navigation-toggle" class="navigation-toggle" />
         <nav class="navigation-bar">
             <ul>
-                <li>@Html.ActionLink("Movie List", "Index", "Home")</li>
+                <li>@Html.ActionLink("Listare", "Index", "Home")</li>
                 @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                <li>@Html.ActionLink("My movies", "GoToMyMovies", "Home")</li>
-                <li><a href="/Home/GoToCart">Cart(<span class='cart-counter-value'>@GlobalClass.CartCounter</span>)</a></li>
+                <li>@*@Html.ActionLink("My movies", "GoToMyMovies", "Home")*@</li>
+                @*<li><a href="/Home/GoToCart">Cart(<span class='cart-counter-value'>@GlobalClass.CartCounter</span>)</a></li>*@
                 <li class="logout-button pull-right" style="margin-right: 20px;">@Html.ActionLink("Logout", "Logout", "Login")</li>
             </ul>
         </nav>

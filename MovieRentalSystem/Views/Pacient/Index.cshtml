@@ -1,0 +1,101 @@
+﻿@using MovieRentalSystem.Models
+@model Pacient
+
+<style>
+    .create-pacient-container {
+        margin-top: 30px;
+    }
+
+    label {
+        color: white;
+    }
+
+    input {
+        height: 38px;
+        width: 300px;
+        padding: 10px;
+    }
+
+    button {
+        height: 50px;
+        width: 100px;
+        float: left;
+        clear: left;
+    }
+</style>
+
+<div class="create-pacient-container">
+    <div class="float-left clear-left">
+        <label class="float-left clear-left">CNP</label>
+        <input class="float-left clear-left" id="cnp" value="@Model.CNP" />
+    </div>
+    <div class="float-left clear-left">
+        <label class="float-left clear-left">Nume</label>
+        <input id="nume" class="float-left clear-left" value="@Model.Nume" />
+    </div>
+    <div class="float-left clear-left">
+        <label class="float-left clear-left">Prenume</label>
+        <input id="prenume" class="float-left clear-left" value="@Model.Prenume" />
+    </div>
+    <div class="float-left clear-left">
+        <label class="float-left clear-left">Varsta</label>
+        <input id="varsta" class="float-left clear-left" value="@Model.Varsta" />
+    </div>
+    <div class="float-left clear-left">
+        <label class="float-left clear-left">Adresa</label>
+        <input id="adresa" class="float-left clear-left" value="@Model.Adresa" />
+    </div>
+    <div class="float-left clear-left">
+        <label class="float-left clear-left">Telefon</label>
+        <input id="telefon" class="float-left clear-left" value="@Model.Telefon" />
+    </div>
+    @*<div class="float-left clear-left">
+        <label class="float-left clear-left">Mesaje de la medici</label>
+        @if (ViewBag.Messages != null)
+        {
+            foreach (var item in ViewBag.Messages)
+            {
+                <span class="float-left clear-left">@item.AuthorName</span>
+                <span class="float-left clear-left">@item.Mesaj</span>
+            }
+        }
+    </div>*@
+    <div class="action-container">
+        <button class="btn-primary" onclick="savePacient('@Model.Id')">Save</button>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var collectData = function (data) {
+        if (!data) {
+            data = {};
+        }
+           data.Id          = '@Model.Id';
+           data.CNP      = $('#cnp').val();
+           data.Nume     = $('#nume').val();
+           data.Prenume  = $('#prenume').val();
+           data.Varsta   = $('#varsta').val();
+           data.Adresa   = $('#adresa').val();
+           data.Telefon  = $('#telefon').val();
+
+        return data;
+    }
+
+    var savePacient = function (pacientId) {
+
+        var data = collectData();
+
+        ajaxHelper.post(
+            "/Pacient/SavePacient",
+            data,
+            function (response) {
+                aler('success');
+            },
+            function (error) {
+                aler('error');
+            }
+        );
+    }
+</script>

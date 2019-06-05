@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MedicalDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alarma">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Tip_Alarma" Type="int" />
+          <Property Name="Provenienta" Type="nvarchar" MaxLength="50" />
+          <Property Name="Data" Type="date" />
+          <Property Name="Declansatorul" Type="uniqueidentifier" />
+          <Property Name="Cod_Alarma" Type="int" />
+          <Property Name="Ora" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Medic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CodPostal" Type="int" />
+          <Property Name="CNP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nume" Type="nvarchar" MaxLength="50" />
+          <Property Name="Prenume" Type="nvarchar" MaxLength="50" />
+          <Property Name="AdresaCabinet" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Mesaje">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AuthorId" Type="uniqueidentifier" />
+          <Property Name="ReciverId" Type="uniqueidentifier" />
+          <Property Name="Mesaj" Type="nvarchar" MaxLength="850" />
+          <Property Name="AuthorType" Type="int" />
+        </EntityType>
+        <EntityType Name="Pacient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CNP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nume" Type="nvarchar" MaxLength="250" />
+          <Property Name="Prenume" Type="nvarchar" MaxLength="250" />
+          <Property Name="Varsta" Type="int" />
+          <Property Name="Adresa" Type="nvarchar" MaxLength="250" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Supraveghetor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nume" Type="nvarchar" MaxLength="50" />
+          <Property Name="Prenume" Type="nvarchar" MaxLength="50" />
+          <Property Name="AlaramaId" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Parola" Type="nvarchar" MaxLength="250" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserType" Type="int" />
+        </EntityType>
+        <Association Name="FK_Medic_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Medic" Type="Self.Medic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medic">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pacient_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Pacient" Type="Self.Pacient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pacient">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supraveghetor_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Supraveghetor" Type="Self.Supraveghetor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Supraveghetor">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MedicalDataBaseModelStoreContainer">
+          <EntitySet Name="Alarma" EntityType="Self.Alarma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medic" EntityType="Self.Medic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mesaje" EntityType="Self.Mesaje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pacient" EntityType="Self.Pacient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supraveghetor" EntityType="Self.Supraveghetor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Medic_User" Association="Self.FK_Medic_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Medic" EntitySet="Medic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pacient_User" Association="Self.FK_Pacient_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Pacient" EntitySet="Pacient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supraveghetor_User" Association="Self.FK_Supraveghetor_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Supraveghetor" EntitySet="Supraveghetor" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MedicalDataBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MedicalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alarmas" EntityType="MedicalDataBaseModel.Alarma" />
+          <EntitySet Name="Medics" EntityType="MedicalDataBaseModel.Medic" />
+          <EntitySet Name="Mesajes" EntityType="MedicalDataBaseModel.Mesaje" />
+          <EntitySet Name="Pacients" EntityType="MedicalDataBaseModel.Pacient" />
+          <EntitySet Name="Supraveghetors" EntityType="MedicalDataBaseModel.Supraveghetor" />
+          <EntitySet Name="Users" EntityType="MedicalDataBaseModel.User" />
+          <AssociationSet Name="FK_Medic_User" Association="MedicalDataBaseModel.FK_Medic_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Medic" EntitySet="Medics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pacient_User" Association="MedicalDataBaseModel.FK_Pacient_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Pacient" EntitySet="Pacients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supraveghetor_User" Association="MedicalDataBaseModel.FK_Supraveghetor_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Supraveghetor" EntitySet="Supraveghetors" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Alarma">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Tip_Alarma" Type="Int32" />
+          <Property Name="Provenienta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="DateTime" Precision="0" />
+          <Property Name="Declansatorul" Type="Guid" />
+          <Property Name="Cod_Alarma" Type="Int32" />
+          <Property Name="Ora" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Medic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CodPostal" Type="Int32" />
+          <Property Name="CNP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Prenume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdresaCabinet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Guid" />
+          <NavigationProperty Name="User" Relationship="MedicalDataBaseModel.FK_Medic_User" FromRole="Medic" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Mesaje">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="AuthorId" Type="Guid" />
+          <Property Name="ReciverId" Type="Guid" />
+          <Property Name="Mesaj" Type="String" MaxLength="850" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Pacient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CNP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nume" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Prenume" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Varsta" Type="Int32" />
+          <Property Name="Adresa" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Guid" />
+          <NavigationProperty Name="User" Relationship="MedicalDataBaseModel.FK_Pacient_User" FromRole="Pacient" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Supraveghetor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Prenume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AlaramaId" Type="Guid" />
+          <Property Name="UserId" Type="Guid" />
+          <NavigationProperty Name="User" Relationship="MedicalDataBaseModel.FK_Supraveghetor_User" FromRole="Supraveghetor" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Parola" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserType" Type="Int32" />
+          <NavigationProperty Name="Medics" Relationship="MedicalDataBaseModel.FK_Medic_User" FromRole="User" ToRole="Medic" />
+          <NavigationProperty Name="Pacients" Relationship="MedicalDataBaseModel.FK_Pacient_User" FromRole="User" ToRole="Pacient" />
+          <NavigationProperty Name="Supraveghetors" Relationship="MedicalDataBaseModel.FK_Supraveghetor_User" FromRole="User" ToRole="Supraveghetor" />
+        </EntityType>
+        <Association Name="FK_Medic_User">
+          <End Type="MedicalDataBaseModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="MedicalDataBaseModel.Medic" Role="Medic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medic">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pacient_User">
+          <End Type="MedicalDataBaseModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="MedicalDataBaseModel.Pacient" Role="Pacient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pacient">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supraveghetor_User">
+          <End Type="MedicalDataBaseModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="MedicalDataBaseModel.Supraveghetor" Role="Supraveghetor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Supraveghetor">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MedicalDataBaseModelStoreContainer" CdmEntityContainer="MedicalEntities">
+          <EntitySetMapping Name="Alarmas">
+            <EntityTypeMapping TypeName="MedicalDataBaseModel.Alarma">
+              <MappingFragment StoreEntitySet="Alarma">
+                <ScalarProperty Name="Ora" ColumnName="Ora" />
+                <ScalarProperty Name="Cod_Alarma" ColumnName="Cod_Alarma" />
+                <ScalarProperty Name="Declansatorul" ColumnName="Declansatorul" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Provenienta" ColumnName="Provenienta" />
+                <ScalarProperty Name="Tip_Alarma" ColumnName="Tip_Alarma" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medics">
+            <EntityTypeMapping TypeName="MedicalDataBaseModel.Medic">
+              <MappingFragment StoreEntitySet="Medic">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AdresaCabinet" ColumnName="AdresaCabinet" />
+                <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="CNP" ColumnName="CNP" />
+                <ScalarProperty Name="CodPostal" ColumnName="CodPostal" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mesajes">
+            <EntityTypeMapping TypeName="MedicalDataBaseModel.Mesaje">
+              <MappingFragment StoreEntitySet="Mesaje">
+                <ScalarProperty Name="AuthorType" ColumnName="AuthorType" />
+                <ScalarProperty Name="Mesaj" ColumnName="Mesaj" />
+                <ScalarProperty Name="ReciverId" ColumnName="ReciverId" />
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pacients">
+            <EntityTypeMapping TypeName="MedicalDataBaseModel.Pacient">
+              <MappingFragment StoreEntitySet="Pacient">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Varsta" ColumnName="Varsta" />
+                <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="CNP" ColumnName="CNP" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supraveghetors">
+            <EntityTypeMapping TypeName="MedicalDataBaseModel.Supraveghetor">
+              <MappingFragment StoreEntitySet="Supraveghetor">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AlaramaId" ColumnName="AlaramaId" />
+                <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MedicalDataBaseModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Parola" ColumnName="Parola" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

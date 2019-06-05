@@ -1,91 +1,37 @@
 ﻿@using MovieRentalSystem.Models;
 @using MovieRentalSystem.Models.ViewClasses;
-@model IList<Movie>
+@model IList<Pacient>
 
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
+<link href="~/Content/Site.css" rel="stylesheet" />
 <style>
-    .search-bar {
-        position: relative;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        transition: all 1s;
-        width: 50px;
-        height: 50px;
-        background: white;
-        box-sizing: border-box;
-        border-radius: 25px;
-        border: 4px solid white;
-        padding: 5px;
-        margin-top: 6%;
-    }
 
-    .form-control {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 42.5px;
-        line-height: 30px;
-        outline: 0;
-        border: 0;
-        display: none;
-        font-size: 1em;
-        border-radius: 20px;
-        padding: 0 20px;
-    }
-
-    .fa {
-        box-sizing: border-box;
+    #new-message-input {
+        float: left;
+        clear: left;
+        min-width: 567px;
+        min-height: 100px;
         padding: 10px;
-        width: 42.5px;
-        height: 42.5px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        border-radius: 50%;
-        color: #216a7c;
-        text-align: center;
-        font-size: 1.2em;
-        transition: all 1s;
     }
 
-    form:hover {
-        width: 200px;
-        cursor: pointer;
+    #medical-notes {
+        min-height: 300px;
     }
 
-        form:hover input {
-            display: block;
-        }
-
-        form:hover .fa {
-            background-color: rgb(33, 106, 124);
-            color: white;
-        }
-
-    .rent-button {
-        background-color: #216a7c;
-        -moz-border-radius: 42px;
-        -webkit-border-radius: 42px;
-        border-radius: 42px;
-        border: 2px solid #18ab29;
-        display: inline-block;
-        cursor: pointer;
-        color: #ffffff;
-        font-family: Verdana;
-        font-size: 25px;
-        font-weight: bold;
-        padding: 5px 10px;
-        text-decoration: none;
+    .actual-message {
+        border: 1px solid blue;
+        padding: 10px;
+        margin: 10px;
     }
 
-        .rent-button:hover {
-            background-color: white;
-            color: #216a7c;
-        }
+    .send-message-container {
+        width: 100%;
+        float: left;
+    }
+
+
+
 </style>
 
 
@@ -103,12 +49,11 @@
                         <table>
                             <thead class="table-head">
                                 <tr class="row100 head">
-                                    <th class="cell100 column1">Poza</th>
-                                    <th class="cell100 column2">Nume</th>
-                                    <th class="cell100 column3">Tip</th>
-                                    <th class="cell100 column4">An</th>
-                                    <th class="cell100 column5">Stare</th>
-                                    <th class="cell100 column6">Inchiriaza</th>
+                                    <th class="entries cell100 column1">Nume</th>
+                                    <th class="entries cell100 column2">Varsta</th>
+                                    <th class="entries cell100 column3">Adresa</th>
+                                    <th class="entries cell100 column4">Telefon</th>
+                                    <th class="entries cell100 column5">Altele</th>
                             </thead>
                         </table>
                     </div>
@@ -116,27 +61,20 @@
                     <div class="table100-body js-pscroll">
                         <table class="movie-table">
                             <tbody>
-                                @foreach (var filmulCurrent in Model)
+                                @foreach (var currentPacient in Model)
                                 {
-                                    <tr id="@filmulCurrent.Id" class="Search">
-                                        <td class="cell100 column1"><img src="@filmulCurrent.UrlPicture" /></td>
-                                        <td class="cell100 column2">@filmulCurrent.Name</td>
-                                        <td class="cell100 column3">@filmulCurrent.Tip</td>
-                                        <td class="cell100 column4">@filmulCurrent.An</td>
-                                        @if (filmulCurrent.IsRented == 0 || filmulCurrent.IsRented == null)
-                                        {
-                                            <td class="cell100 column5">Liber</td>
-                                        }
-                                        else if (filmulCurrent.IsRented == 1)
-                                        {
-                                            <td class="cell100 column5">Inchiriat</td>
-                                        }
-                                        @if (filmulCurrent.IsRented != 1)
-                                        {
-                                            <td class="cell100 column6">
-                                                <input class="rent-button" type="button" value="+" onclick="IncrementCart('@filmulCurrent.Id')" />
-                                            </td>
-                                        }
+                                    <tr id="@currentPacient.Id" class="Search">
+                                        <td class="entries cell100 column1">@currentPacient.Nume  @currentPacient.Prenume</td>
+                                        <td class="entries cell100 column2">@currentPacient.Varsta</td>
+                                        <td class="entries cell100 column3">@currentPacient.Adresa</td>
+                                        <td class="entries cell100 column4">@currentPacient.Telefon</td>
+                                        <td class="entries cell100 column5">
+                                            @if (GlobalClass.UserType == (int)USER_TYPE_ENUM.MEDIC || GlobalClass.UserType == (int)USER_TYPE_ENUM.PACIENT)
+                                            {
+                                                <button class="btn-primary" onclick="showNotesModal('@currentPacient.UserId')">SHOW NOTES</button>
+                                                <button class="btn-primary" onclick="goToPacientDetails('@currentPacient.Id')">DETAILS</button>
+                                            }
+                                        </td>
                                     </tr>
                                 }
 
@@ -148,57 +86,106 @@
         </div>
     </div>
 </div>
-
+@Html.Partial("~/Views/Home/Modals/ModalMesaje.cshtml", new List<NotesViewModel>())
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
-    var listFilmeInchiriate = [];
+    var currentlySelectedReciverId = "";
 
-    var IncrementCart = function (id) {
-        var dontPush = false;
-        listFilmeInchiriate.forEach(function (idFilm) {
-            if (idFilm == id) {
-                dontPush = true;
-                return;
-            }
-        });
-
-        if (dontPush == true) {
-            return;
-        }
-
-        listFilmeInchiriate.push(id);
-        var cartCounterCurrentValue = $(".cart-counter-value").text();
-        $(".cart-counter-value").text(parseInt(cartCounterCurrentValue) + 1);
-
-        saveMoviesId(listFilmeInchiriate);
+    var goToPacientDetails = function (pacientId) {
+        window.location.href = "/Pacient/GetSpecificPacient?pacientId=" + pacientId;
     }
 
-    var saveMoviesId = function (listaFilme) {
-        var url = "/Home/SaveItemsList";
-        ajaxHelper.post(url,
-            listaFilme,
-            function () {
+
+    var deleteNote = function (noteId, reciverId) {
+
+        ajaxHelper.post(
+            '/Home/DeleteNote',
+            {
+                noteId: noteId
+            },
+            function (response) {
+                debugger;
+
+                if (response) {
+                    ajaxHelper.getView(
+                        '/Home/GetNotes',
+                        {
+                            pacientId: reciverId
+                        },
+                        function (partialView) {
+                            $("#medical-notes").html(partialView);
+                        },
+                        function (err) {
+                            alert('error');
+                        }
+                    );
+                }
+
             },
             function () {
-                alert("eroare");
+                alert('error');
+            }
+        );
+
+
+    }
+
+    var showNotesModal = function (userId) {
+        debugger;
+        currentlySelectedReciverId = userId;
+        ajaxHelper.getView(
+            '/Home/GetNotes',
+            {
+                userId: userId
+            },
+            function (partialView) {
+                $("#medical-notes").html(partialView);
+                $("#inchirieri-modal").modal('show');
+            },
+            function (err) {
+                alert('error');
             }
         );
     }
 
-    $("#inchirieri-modal").on('hide.bs.modal', function () {
-        isOpen = false;
-    });
+    var sendMessage = function () {
+        var message = $('#new-message-input').val();
+        var senderId = '@GlobalClass.UserId';
+        var reciverId = currentlySelectedReciverId;
 
-    $(document).ready(function () {
+        ajaxHelper.post(
+            '/Home/SaveMessage',
+            {
+                message: message,
+                senderId: senderId,
+                reciverId: reciverId
+            },
+            function (response) {
+                    debugger;
+                if (response) {
+                    ajaxHelper.getView(
+                        '/Home/GetNotes',
+                        {
+                            userId: reciverId
+                        },
+                        function (partialView) {
+                            $("#medical-notes").html(partialView);
+                        },
+                        function (err) {
+                            alert('error');
+                        }
+                    );
+                }
+            },
+            function () {
+                alert('error');
+            }
+        );
 
-        $("#inchirieri-modal").modal({
-            backdrop: null,
-            keyboard: false
-        });
+    }
 
-        $("#inchirieri-modal").modal('hide');
-    });
+
 
     $(document).ready(function () {
         function Contains(text_one, text_two) {

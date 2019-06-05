@@ -12,16 +12,12 @@ namespace MovieRentalSystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Movie
+    public partial class Mesaje
     {
         public System.Guid Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> IsRented { get; set; }
-        public Nullable<System.Guid> RenterId { get; set; }
-        public Nullable<int> An { get; set; }
-        public string Tip { get; set; }
-        public string UrlPicture { get; set; }
-    
-        public virtual User User { get; set; }
+        public Nullable<System.Guid> AuthorId { get; set; }
+        public Nullable<System.Guid> ReciverId { get; set; }
+        public string Mesaj { get; set; }
+        public Nullable<int> AuthorType { get; set; }
     }
 }

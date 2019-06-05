@@ -1,0 +1,50 @@
+﻿@using MovieRentalSystem.Models;
+@using MovieRentalSystem.Models.ViewClasses;
+@model IList<User>
+
+@{
+
+    string GetUserTypeName(int userType)
+    {
+        var UserTypeName = "";
+        switch ((USER_TYPE_ENUM)userType)
+        {
+            case USER_TYPE_ENUM.ADMIN:
+                UserTypeName = "ADMIN";
+                break;
+            case USER_TYPE_ENUM.USER:
+                UserTypeName = "USER";
+                break;
+            case USER_TYPE_ENUM.MEDIC:
+                UserTypeName = "MEDIC";
+                break;
+            case USER_TYPE_ENUM.SUPRAVEGHETOR:
+                UserTypeName = "SUPRAVEGHETOR";
+                break;
+            case USER_TYPE_ENUM.PACIENT:
+                UserTypeName = "PACIENT";
+                break;
+            default:
+                break;
+        }
+
+        return UserTypeName;
+    }
+}
+
+<table class="movie-table">
+    <tbody>
+        @foreach (var currentUser in Model)
+        {
+            <tr id="@currentUser.Id" class="Search">
+                <td class="entries cell100 column1">@GetUserTypeName(currentUser.UserType.Value)</td>
+                <td class="entries cell100 column2">@currentUser.Email</td>
+                <td class="entries cell100 column3">
+                    <div class="delete">
+                        <button class="btn-primary" onclick="deleteUser('@currentUser.Id')">X</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

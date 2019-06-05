@@ -65,38 +65,38 @@ textarea {
     box-shadow: 0 8px 6px -6px #999;
 }
 
-.navigation-bar ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
+    .navigation-bar ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
 
-.navigation-bar li {
-    margin-bottom: 1em;
-    margin-left: 1em;
-}
+    .navigation-bar li {
+        margin-bottom: 1em;
+        margin-left: 1em;
+    }
 
-.navigation-bar a {
-    color: #E1F5FA;
-    text-decoration: none;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity 150ms ease-in-out;
-}
+    .navigation-bar a {
+        color: #E1F5FA;
+        text-decoration: none;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        opacity: 0;
+        transition: opacity 150ms ease-in-out;
+    }
 
-.navigation-bar a:hover {
-    color: #000;
-}
+        .navigation-bar a:hover {
+            color: #000;
+        }
 
 .navigation-toggle:checked ~ nav {
     transform: scale(1, 1);
 }
 
-.navigation-toggle:checked ~ nav a {
-    opacity: 1;
-    transition: opacity 250ms ease-in-out 250ms;
-}
+    .navigation-toggle:checked ~ nav a {
+        opacity: 1;
+        transition: opacity 250ms ease-in-out 250ms;
+    }
 
 .navigation-toggle-label {
     position: absolute;
@@ -108,30 +108,30 @@ textarea {
     align-items: center;
 }
 
-.navigation-toggle-label span,
-.navigation-toggle-label span::before,
-.navigation-toggle-label span::after {
-    display: block;
-    background: white;
-    height: 2px;
-    width: 2em;
-    border-radius: 2px;
-    position: relative
-}
+    .navigation-toggle-label span,
+    .navigation-toggle-label span::before,
+    .navigation-toggle-label span::after {
+        display: block;
+        background: white;
+        height: 2px;
+        width: 2em;
+        border-radius: 2px;
+        position: relative
+    }
 
-.navigation-toggle-label span::before,
-.navigation-toggle-label span::after {
-    content: '';
-    position: absolute;
-}
+        .navigation-toggle-label span::before,
+        .navigation-toggle-label span::after {
+            content: '';
+            position: absolute;
+        }
 
-.navigation-toggle-label span::before {
-    bottom: 7px;
-}
+        .navigation-toggle-label span::before {
+            bottom: 7px;
+        }
 
-.navigation-toggle-label span::after {
-    top: 7px;
-}
+        .navigation-toggle-label span::after {
+            top: 7px;
+        }
 
 @media screen and (min-width: 800px) {
     .navigation-toggle-label {
@@ -155,36 +155,36 @@ textarea {
         align-items: center;
     }
 
-    .navigation-bar a {
-        opacity: 1;
-        position: relative;
-    }
+        .navigation-bar a {
+            opacity: 1;
+            position: relative;
+        }
 
-    .navigation-bar a::before {
-        content: '';
-        display: block;
-        height: 5px;
-        background: black;
-        position: absolute;
-        top: -1em;
-        left: 0;
-        right: 0;
-        transform: scale(0, 1);
-        transition: transform ease-in-out 250ms;
-    }
+            .navigation-bar a::before {
+                content: '';
+                display: block;
+                height: 5px;
+                background: black;
+                position: absolute;
+                top: -1em;
+                left: 0;
+                right: 0;
+                transform: scale(0, 1);
+                transition: transform ease-in-out 250ms;
+            }
 
-    .navigation-bar a:hover::before {
-        transform: scale(1,1);
-    }
+            .navigation-bar a:hover::before {
+                transform: scale(1,1);
+            }
 
-    .navigation-bar ul {
-        display: flex;
-    }
+        .navigation-bar ul {
+            display: flex;
+        }
 
-    .navigation-bar li {
-        margin-left: 3em;
-        margin-bottom: 0;
-    }
+        .navigation-bar li {
+            margin-left: 3em;
+            margin-bottom: 0;
+        }
 }
 /* end nav bar*/
 
@@ -197,49 +197,49 @@ textarea {
     transform: translate(-50%, -50%);
 }
 
-.limiter a {
-    margin: 0px;
-    transition: all 0.4s;
-    -webkit-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-}
+    .limiter a {
+        margin: 0px;
+        transition: all 0.4s;
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+    }
 
-.limiter a:focus {
-    outline: none !important;
-}
+        .limiter a:focus {
+            outline: none !important;
+        }
 
-.limiter a:hover {
-    text-decoration: none;
-}
+        .limiter a:hover {
+            text-decoration: none;
+        }
 
-.limiter h1, h2, h3, h4, h5, h6 {
-    margin: 0px;
-}
+    .limiter h1, h2, h3, h4, h5, h6 {
+        margin: 0px;
+    }
 
-.limiter p {
-    margin: 0px;
-}
+    .limiter p {
+        margin: 0px;
+    }
 
-.limiter ul, li {
-    margin: 0px;
-    list-style-type: none;
-}
+    .limiter ul, li {
+        margin: 0px;
+        list-style-type: none;
+    }
 
-.limiter input {
-    display: block;
-    outline: none;
-    border: none !important;
-}
+    .limiter input {
+        display: block;
+        outline: none;
+        border: none !important;
+    }
 
-.limiter textarea {
-    display: block;
-    outline: none;
-}
+    .limiter textarea {
+        display: block;
+        outline: none;
+    }
 
-.limiter textarea:focus, input:focus {
-    border-color: transparent !important;
-}
+        .limiter textarea:focus, input:focus {
+            border-color: transparent !important;
+        }
 
 button {
     outline: none !important;
@@ -247,9 +247,9 @@ button {
     background: transparent;
 }
 
-button:hover {
-    cursor: pointer;
-}
+    button:hover {
+        cursor: pointer;
+    }
 
 iframe {
     border: none !important;
@@ -368,7 +368,7 @@ th, td {
     font-size: 18px;
     color: #fff;
     line-height: 1.4;
-    background-color: rgb(33, 106, 124) 
+    background-color: rgb(33, 106, 124)
 }
 
 .table100.ver1 td {
@@ -386,17 +386,17 @@ th, td {
     -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
 }
 
-.table100.ver1 .ps__rail-y {
-    right: 5px;
-}
+    .table100.ver1 .ps__rail-y {
+        right: 5px;
+    }
 
-.table100.ver1 .ps__rail-y::before {
-    background-color: #ebebeb;
-}
+        .table100.ver1 .ps__rail-y::before {
+            background-color: #ebebeb;
+        }
 
-.table100.ver1 .ps__rail-y .ps__thumb-y::before {
-    background-color: #cccccc;
-}
+        .table100.ver1 .ps__rail-y .ps__thumb-y::before {
+            background-color: #cccccc;
+        }
 /*end table*/
 
 /*About box*/
@@ -444,16 +444,16 @@ ul {
     list-style: none;
 }
 
-.box li a {
-    color: white;
-    text-decoration: none;
-    font-size: 60px;
-    transition: all ease-in-out 250ms;
-}
+    .box li a {
+        color: white;
+        text-decoration: none;
+        font-size: 60px;
+        transition: all ease-in-out 250ms;
+    }
 
-.box li a:hover {
-    color: #b9b9b9;
-}
+        .box li a:hover {
+            color: #b9b9b9;
+        }
 /*end About box*/
 
 .movie-table img {
@@ -466,4 +466,110 @@ ul {
     margin-top: 150px;
     border: 1px solid red;
     height: 590px;
+}
+
+.search-bar {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    transition: all 1s;
+    width: 50px;
+    height: 50px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 4px solid white;
+    padding: 5px;
+    margin-top: 6%;
+}
+
+.form-control {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 42.5px;
+    line-height: 30px;
+    outline: 0;
+    border: 0;
+    display: none;
+    font-size: 1em;
+    border-radius: 20px;
+    padding: 0 20px;
+}
+
+.fa {
+    box-sizing: border-box;
+    padding: 10px;
+    width: 42.5px;
+    height: 42.5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    color: #216a7c;
+    text-align: center;
+    font-size: 1.2em;
+    transition: all 1s;
+}
+
+form:hover {
+    width: 200px;
+    cursor: pointer;
+}
+
+    form:hover input {
+        display: block;
+    }
+
+    form:hover .fa {
+        background-color: rgb(33, 106, 124);
+        color: white;
+    }
+
+.rent-button {
+    background-color: #216a7c;
+    -moz-border-radius: 42px;
+    -webkit-border-radius: 42px;
+    border-radius: 42px;
+    border: 2px solid #18ab29;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Verdana;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+    .rent-button:hover {
+        background-color: white;
+        color: #216a7c;
+    }
+
+
+.float-left {
+    float: left;
+}
+
+.clear-left {
+    clear: left;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
+.margin-10 {
+    margin: 10px;
+}
+
+.delete {
+    color: red;
+}
+
+.entries {
+    padding: 10px;
 }

@@ -18,8 +18,12 @@ namespace MovieRentalSystem
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            
-
         }
+
+        protected virtual void Application_Error(object sender, EventArgs e)
+        {
+            var ex = Context.Server.GetLastError();
+        }
+
     }
 }

@@ -17,19 +17,21 @@ namespace MovieRentalSystem.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Movies = new HashSet<Movie>();
+            this.Medics = new HashSet<Medic>();
+            this.Pacients = new HashSet<Pacient>();
+            this.Supraveghetors = new HashSet<Supraveghetor>();
         }
     
         public System.Guid Id { get; set; }
         public string Parola { get; set; }
         public string Email { get; set; }
-        public string Adresa { get; set; }
-        public string Nume { get; set; }
-        public string Prenume { get; set; }
-        public Nullable<int> AnDeNastere { get; set; }
         public Nullable<int> UserType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Movie> Movies { get; set; }
+        public virtual ICollection<Medic> Medics { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pacient> Pacients { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Supraveghetor> Supraveghetors { get; set; }
     }
 }

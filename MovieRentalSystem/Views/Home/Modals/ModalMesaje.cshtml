@@ -1,5 +1,5 @@
 ﻿@using MovieRentalSystem.Models.ViewClasses;
-
+@model IList<NotesViewModel>
 <div class="modal fade" id="inchirieri-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -9,12 +9,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="filme">
-                @Html.Partial("~/Views/Home/Modals/_ModalBodyInchireaza.cshtml", new List<MovieViewClass>())
+            <div class="modal-body" id="medical-notes">
+                @Html.Partial("~/Views/Home/Modals/_ModalMesajeBody.cshtml", Model)
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer margin-10">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="sendMessage()">Send Message</button>
             </div>
         </div>
     </div>

@@ -13,10 +13,10 @@ namespace MovieRentalSystem.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MovieRentalSystemEntities : DbContext
+    public partial class MedicalEntities : DbContext
     {
-        public MovieRentalSystemEntities()
-            : base("name=MovieRentalSystemEntities")
+        public MedicalEntities()
+            : base("name=MedicalEntities")
         {
         }
     
@@ -25,7 +25,11 @@ namespace MovieRentalSystem.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Movie> Movies { get; set; }
+        public virtual DbSet<Alarma> Alarmas { get; set; }
+        public virtual DbSet<Medic> Medics { get; set; }
+        public virtual DbSet<Mesaje> Mesajes { get; set; }
+        public virtual DbSet<Pacient> Pacients { get; set; }
+        public virtual DbSet<Supraveghetor> Supraveghetors { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }
